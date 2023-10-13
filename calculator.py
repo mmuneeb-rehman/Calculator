@@ -1,38 +1,48 @@
 import streamlit as st
 
-def add(n, m):
-    return n + m
+def add(numbers):
+    return sum(numbers)
 
-def sub(n, m):
-    return n - m
+def subtract(numbers):
+    result = numbers[0]
+    for num in numbers[1:]:
+        result -= num
+    return result
 
-def mul(n, m):
-    return n * m
+def multiply(numbers):
+    result = 1
+    for num in numbers:
+        result *= num
+    return result
 
-def div(n, m):
-    if m == 0:
-        return "Error: Division by zero"
-    return n / m
+def divide(numbers):
+    result = numbers[0]
+    for num in numbers[1:]:
+        if num == 0:
+            return "Error: Division by zero"
+        result /= num
+    return result
 
 def calculator():
     st.title("Calculator")
     action = st.radio("Select an operation", ('Addition', 'Subtraction', 'Multiplication', 'Division'))
 
-    num1 = st.number_input("Enter the first number:")
-    num2 = st.number_input("Enter the second number:")
+    num_count = st.number_input("How many numbers do you want to calculate with?", 2, 4, 2)
+
+    numbers = []
+    for i in range(num_count):
+        num = st.number_input(f"Enter number {i + 1}:")
+        numbers.append(num)
 
     if st.button("Calculate"):
         if action == 'Addition':
-            result = add(num1, num2)
+            result = add(numbers)
         elif action == 'Subtraction':
-            result = sub(num1, num2)
+            result = subtract(numbers)
         elif action == 'Multiplication':
-            result = mul(num1, num2)
+            result = multiply(numbers)
         else:
-            if num2 == 0:
-                result = "Error: Division by zero"
-            else:
-                result = div(num1, num2)
+            result = divide(numbers)
 
         st.write(f"Result: {result}")
 
